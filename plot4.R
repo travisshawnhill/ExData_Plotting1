@@ -1,0 +1,48 @@
+## Exploratory Data Analysis Course Project 1
+## ExData_Plotting1
+## Travis Hill
+
+## 
+## Data Read-In Code, not specific to a plot. Will be featured
+## in plot1.R to plot4.R
+##
+
+##Determine specific lines to read in from data to maximize speed.
+
+firstDateTime <- strptime("2006-12-16 17:24:00", "%Y-%m-%d %H:%M:%S") ## Found in first line of datafile
+startDateTime <- strptime("2007-02-01 00:01:00", "%Y-%m-%d %H:%M:%S") ## Specified in assignment
+skipLines <- as.numeric(startDateTime - firstDateTime) * 1440 ##Determine lines to skip before reading given one line per minute
+nLines <- 2880 ##Number of lines given one line per minute in 48 hours
+
+##Obtain the remote file and store zip as a temporary file, unzip, and read unzipped data into dataframe
+
+temp <- tempfile()
+download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",temp)
+
+DF <- read.csv(unz(temp, "household_power_consumption.txt"), header = TRUE, sep = ";", skip = skipLines, nrows = nLines)
+
+unlink(temp) ##Remove temp file
+
+##
+##Plot 4-Specific Code:
+##
+
+##Convert Date and Time columns into a single datetime variable
+datetime <- strptime(paste(DF[,1], DF[,2], sep=" "), "%d/%m/%Y %H:%M:%S") 
+
+##Use png device only
+png("plot4.png", width=480, height=480)
+par(mfrow = c(2, 2)) ##initialize matrix of tables
+
+plot(datetime, DF[,3], type="l", xlab="", ylab="Global Active Power", cex=0.2)
+
+plot(datetime, DF[,5], type="l", xlab="datetime", ylab="Voltage")
+
+plot(datetime, DF[,7], type="l", ylab="Energy Submetering", xlab="")
+lines(datetime, DF[,8], type="l", col="red")
+lines(datetime, DF[,9], type="l", col="blue")
+legend("topright", c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), lty=, lwd=2.5, col=c("black", "red", "blue"), bty="o")
+
+plot(datetime, DF[,4], type="l", xlab="datetime", ylab="Global_reactive_power")
+
+dev.off()

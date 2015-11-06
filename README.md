@@ -1,3 +1,20 @@
+## Update from Travis Hill:
+Coursera "Exploratory Data Analysis" Course
+Course Project 1
+ExData_Plotting1
+
+Assignment was completed on November 6, 2015. Top-level directory contains 8 assignment files, and one README file:
+-plot1.R
+-plot2.R
+-plot3.R
+-plot4.R
+-plot1.png
+-plot2.png
+-plot3.png
+-plot4.png
+
+Directory does not contain experimental data from UCI, each .R file contiains code which downloads the remote file, unzips it, and reads the necessary subset of data for the assignment (data from 01/02/2007 - 02/02/2007). This is to maximize reproducibility and minimize load time while executing the code.
+
 ## Introduction
 
 This assignment uses data from
